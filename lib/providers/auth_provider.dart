@@ -3,14 +3,27 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-final authProvider = Provider((ref) => Authenticator());
+final authProvider = Provider((ref) => Authenticator(ref));
+
+final authStateProvider = StateProvider((ref) => AuthState.loading);
+
+enum AuthState { loading, signedIn, signedOut }
 
 class Authenticator {
   SharedPreferences? _prefs;
+  final ProviderRef ref;
+
+  Authenticator(this.ref) {
+    ref.read(authStateProvider.notifier).state = AuthState.loading;
+    _isSignedIn().then((signed) => {
+          ref.read(authStateProvider.notifier).state =
+              (signed ? AuthState.signedIn : AuthState.signedOut)
+        });
+  }
 
   int attempts = 0;
 
-  FutureOr<SharedPreferences> _getPrefs() async {
+  Future<SharedPreferences> _getPrefs() async {
     if (_prefs != null) return _prefs!;
     return await SharedPreferences.getInstance();
   }
@@ -19,19 +32,26 @@ class Authenticator {
     required String email,
     required String password,
   }) async {
+    ref.read(authStateProvider.notifier).state = AuthState.loading;
     if (attempts.isOdd) {
-      return Future.delayed(const Duration(seconds: 2));
+      return Future.delayed(const Duration(seconds: 2)).then((value) async {
+        ref.read(authStateProvider.notifier).state = AuthState.signedIn;
+        (await _getPrefs()).setString('token', '123');
+      });
     }
     attempts++;
+    ref.read(authStateProvider.notifier).state = AuthState.signedOut;
     return Future.delayed(const Duration(seconds: 1),
         throw Exception("Incorrect email or password"));
   }
 
   Future<void> signOut() {
-    return Future.delayed(const Duration(seconds: 1));
+    ref.read(authStateProvider.notifier).state = AuthState.loading;
+    return Future.delayed(const Duration(seconds: 1)).then((value) =>
+        ref.read(authStateProvider.notifier).state = AuthState.signedOut);
   }
 
-  Future<bool> isSignedIn() async {
+  Future<bool> _isSignedIn() async {
     return (await _getPrefs()).getString('token') != null;
   }
 }

@@ -10,25 +10,34 @@ class SplashScreen extends ConsumerStatefulWidget {
 }
 
 class _SplashScreenState extends ConsumerState<SplashScreen> {
-
   @override
   void initState() {
-    ref.read(authProvider).isSignedIn().then((signed) {
-      Navigator.pushNamedAndRemoveUntil(context, signed ? '/todo' : '/login', (route) => true);
-    });
+    ref.read(authProvider);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: Colors.white,
-      body: Center(
-        child: Icon(
-          Icons.note,
-          size: 150,
-          color: Colors.red,
-        ),
+      body: Consumer(
+        builder: (BuildContext context, WidgetRef ref, Widget? child) {
+          final authState = ref.watch(authStateProvider);
+          if (authState == AuthState.signedIn) {
+            Future.delayed(Duration.zero,
+                () => Navigator.pushReplacementNamed(context, '/todo'));
+          } else if (authState == AuthState.signedOut) {
+            Future.delayed(Duration.zero,
+                () => Navigator.pushReplacementNamed(context, '/login'));
+          }
+          return const Center(
+            child: Icon(
+              Icons.note,
+              size: 150,
+              color: Colors.red,
+            ),
+          );
+        },
       ),
     );
   }
