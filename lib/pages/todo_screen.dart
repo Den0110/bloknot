@@ -1,4 +1,5 @@
 import 'package:bloknot/models/todo_item.dart';
+import 'package:bloknot/navigation/routes.dart';
 import 'package:bloknot/redux/todo/todo_reducer.dart';
 import 'package:bloknot/redux/todo/todo_viewmodel.dart';
 import 'package:bloknot/widgets/todo/todo_item_view.dart';
@@ -47,6 +48,12 @@ class _TodoScreenState extends State<TodoScreen> {
             );
           },
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.note_add),
+        onPressed: () {
+          Navigator.pushNamed(context, Routes.notes);
+        },
       ),
     );
   }

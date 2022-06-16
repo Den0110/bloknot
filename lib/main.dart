@@ -1,4 +1,5 @@
-import 'package:bloknot/router.dart';
+import 'package:bloknot/navigation/router.dart';
+import 'package:bloknot/navigation/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.red,
       ),
       onGenerateRoute: AppRouter.generateRoute,
-      initialRoute: '/',
+      initialRoute: Routes.splash,
     );
   }
 }

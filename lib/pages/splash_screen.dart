@@ -1,3 +1,4 @@
+import 'package:bloknot/navigation/routes.dart';
 import 'package:bloknot/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -25,10 +26,10 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
           final authState = ref.watch(authStateProvider);
           if (authState == AuthState.signedIn) {
             Future.delayed(Duration.zero,
-                () => Navigator.pushReplacementNamed(context, '/todo'));
+                () => Navigator.pushReplacementNamed(context, Routes.todo));
           } else if (authState == AuthState.signedOut) {
             Future.delayed(Duration.zero,
-                () => Navigator.pushReplacementNamed(context, '/login'));
+                () => Navigator.pushReplacementNamed(context, Routes.login));
           }
           return const Center(
             child: Icon(

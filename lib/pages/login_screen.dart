@@ -1,4 +1,5 @@
 import 'package:bloknot/constants/colors.dart';
+import 'package:bloknot/navigation/routes.dart';
 import 'package:bloknot/providers/auth_provider.dart';
 import 'package:bloknot/widgets/common/bloknot_button.dart';
 import 'package:bloknot/widgets/common/text_input.dart';
@@ -24,7 +25,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           password: password,
         )
         .then((_) {
-      Navigator.pushReplacementNamed(context, '/todo');
+      Navigator.pushReplacementNamed(context, Routes.todo);
     }).catchError((e) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(e.toString())));
