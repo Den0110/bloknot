@@ -1,7 +1,7 @@
 import 'package:bloknot/constants/colors.dart';
 import 'package:bloknot/providers/auth_provider.dart';
-import 'package:bloknot/widgets/bloknot_button.dart';
-import 'package:bloknot/widgets/text_input.dart';
+import 'package:bloknot/widgets/common/bloknot_button.dart';
+import 'package:bloknot/widgets/common/text_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

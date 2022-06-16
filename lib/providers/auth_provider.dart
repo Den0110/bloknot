@@ -13,19 +13,14 @@ class Authenticator {
   SharedPreferences? _prefs;
   final ProviderRef ref;
 
+  int attempts = 0;
+
   Authenticator(this.ref) {
     ref.read(authStateProvider.notifier).state = AuthState.loading;
     _isSignedIn().then((signed) => {
           ref.read(authStateProvider.notifier).state =
               (signed ? AuthState.signedIn : AuthState.signedOut)
         });
-  }
-
-  int attempts = 0;
-
-  Future<SharedPreferences> _getPrefs() async {
-    if (_prefs != null) return _prefs!;
-    return await SharedPreferences.getInstance();
   }
 
   Future<void> signInWithEmailAndPassword({
@@ -53,5 +48,10 @@ class Authenticator {
 
   Future<bool> _isSignedIn() async {
     return (await _getPrefs()).getString('token') != null;
+  }
+
+  Future<SharedPreferences> _getPrefs() async {
+    if (_prefs != null) return _prefs!;
+    return _prefs = await SharedPreferences.getInstance();
   }
 }
