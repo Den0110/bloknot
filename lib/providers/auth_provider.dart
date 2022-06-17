@@ -35,9 +35,10 @@ class Authenticator {
       });
     }
     attempts++;
-    ref.read(authStateProvider.notifier).state = AuthState.signedOut;
-    return Future.delayed(const Duration(seconds: 1),
-        throw Exception("Incorrect email or password"));
+    return Future.delayed(const Duration(seconds: 1), () async {
+      ref.read(authStateProvider.notifier).state = AuthState.signedOut;
+      throw Exception("Неверный email или пароль");
+    });
   }
 
   Future<void> signOut() {

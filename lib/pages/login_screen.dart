@@ -14,6 +14,7 @@ class LoginScreen extends ConsumerStatefulWidget {
 }
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
+  bool isSigningUp = false;
   String email = '';
   String password = '';
 
@@ -28,7 +29,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       Navigator.pushReplacementNamed(context, Routes.todo);
     }).catchError((e) {
       ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(e.toString())));
+          .showSnackBar(SnackBar(content: Text(e.message)));
     });
   }
 
@@ -50,14 +51,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   children: [
                     RichText(
                       textAlign: TextAlign.center,
-                      text: const TextSpan(
+                      text: TextSpan(
                         children: <TextSpan>[
                           TextSpan(
-                            text: "Войти",
-                            style: TextStyle(
+                            text: isSigningUp ? 'Зарегистрироваться': 'Войти',
+                            style: const TextStyle(
                               color: Colors.red,
                               fontWeight: FontWeight.bold,
-                              fontSize: 30.0,
+                              fontSize: 28.0,
                             ),
                           ),
                         ],
@@ -86,8 +87,17 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     SizedBox(
                       width: double.infinity,
                       child: BloknotButton(
-                        text: 'Войти',
+                        text: isSigningUp ? 'Создать аккаунт' : 'Войти',
                         onPressed: _onLoginPressed,
+                      ),
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: BloknotButton(
+                        text: isSigningUp ? 'Уже есть аккаунт' : 'Нет аккаунта',
+                        onPressed: () => setState(() {
+                          isSigningUp = !isSigningUp;
+                        }),
                       ),
                     ),
                   ],
