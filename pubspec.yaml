@@ -39,6 +39,10 @@ dependencies:
   moor: ^4.6.1+1
   shared_preferences: ^2.0.15
   freezed_annotation: ^2.0.3
+  drift: ^1.7.0
+  sqlite3_flutter_libs: ^0.5.0
+  path_provider: ^2.0.0
+  path: ^1.8.1
 
 dev_dependencies:
   flutter_test:
@@ -52,6 +56,7 @@ dev_dependencies:
   flutter_lints: ^1.0.0
   build_runner: ^2.1.11
   freezed: ^2.0.3+1
+  drift_dev: ^1.7.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

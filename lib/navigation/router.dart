@@ -1,5 +1,6 @@
 import 'package:bloknot/navigation/routes.dart';
 import 'package:bloknot/pages/login_screen.dart';
+import 'package:bloknot/pages/notes_screen.dart';
 import 'package:bloknot/pages/splash_screen.dart';
 import 'package:bloknot/pages/todo_screen.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,7 @@ class AppRouter {
       case Routes.todo:
         return MaterialPageRoute(builder: (_) => const TodoScreen());
       case Routes.notes:
-        return MaterialPageRoute(builder: (_) => const TodoScreen());
+        return MaterialPageRoute(builder: (_) => const NotesScreen());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
